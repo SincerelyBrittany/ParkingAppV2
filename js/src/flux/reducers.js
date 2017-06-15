@@ -1,18 +1,33 @@
 
 import { signIn } from '../firebase/auth'
+import { signOut } from '../firebase/auth'
 
 export function signin(oldStore, options) {
     const {currentUser} = oldStore;
 	return signIn()
 		.then(res => {
 		    const user = res.user.displayName
-		    console.log(user)
 	        return Object.assign({}, oldStore, {
 	            currentUser: user,
 	        });
 	    });
 
 }
+
+
+export function signout(oldStore, options) {
+    const {currentUser} = oldStore;
+	return signOut()
+		.then(res => {
+		    const user = "please sign in"
+	        return Object.assign({}, oldStore, {
+	            currentUser: currentUser,
+	        });
+	    });
+
+}
+
+
 
 const getLocationAsPromise = () => {
 	return new Promise((resolve, reject) => {

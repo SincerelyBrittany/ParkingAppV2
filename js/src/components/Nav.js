@@ -6,6 +6,11 @@ export default class Nav extends Component{
 		const dispatch = this.props.store.dispatch
 		dispatch('SIGNIN')
 	}
+	handleSignOut(e){
+		const dispatch = this.props.store.dispatch
+		dispatch('SIGNOUT')
+	}
+
 
 	render(){
 		const currentUser = this.props.store.currentUser
@@ -16,7 +21,7 @@ export default class Nav extends Component{
 		   	  </section>
 		   	  <section>
 			   	  <button className="js_google_signin" onClick={(e) => this.handleSignIn()}>Sign In</button>
-	   			  <button className="js_google_signout">Sign Out</button>
+	   			  <button className="js_google_signout" onClick={(e) => this.handleSignOut()}>Sign Out</button>
 		   	  </section>
 		   </div>
 		)

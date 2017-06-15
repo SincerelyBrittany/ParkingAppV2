@@ -23,8 +23,11 @@ export default class Map extends Component {
     		draggable: true,
     		events: {
     			'click': (marker, map) => console.log('lol you clicked the map', marker, map),
-    			'dragstart': (marker, map) => {
-    				console.log(marker.getPosition())
+    			'dragend': (marker, map) => {
+    				console.log("drag",marker.getPosition()),
+
+                    console.log("lat",marker.getPosition().lat().toFixed(8));
+                    console.log("lng",marker.getPosition().lng().toFixed(8));
     			}
     		}
     	};

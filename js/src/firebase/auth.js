@@ -23,13 +23,28 @@ import firebase from 'firebase'
       firebaseAuth.signInWithPopup(provider)
       .then(function(result) {
          // var token = result.credential.accessToken;
-         console.log("SIGNIN RESULT: ")
          resolve(result);
       }).catch(function(error) {
          const errorCode = error.code;
          const errorMessage = error.message;
-         console.log(error.code)
-         console.log(error.message)
       });
     })
   }
+
+
+    export function signOut(){
+      const provider = new firebase.auth.GoogleAuthProvider();
+    return new Promise((resolve, reject) => {
+      firebaseAuth.signOut() .then(function(result) {
+         resolve(result);
+      }).catch(function(error) {
+         const errorCode = error.code;
+         const errorMessage = error.message;
+      });
+    })
+  }
+
+
+
+
+
