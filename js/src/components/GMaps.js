@@ -113,7 +113,7 @@ export default class GMaps extends Component {
         this._initShimLogic();
     }
     componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
+        // console.log(nextProps)
         if (nextProps.center.lat !== this.props.center.lat) {
             this.map.setCenter(nextProps.center)
         }

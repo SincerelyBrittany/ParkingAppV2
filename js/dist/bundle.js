@@ -13072,14 +13072,16 @@ var App = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      // console.log(this.props)
+      // <Nav store={this.props} />
+      //    <br></br>
+      //    <Map {...this.props} />
+      //    <br></br>
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(_Nav2.default, { store: this.props }),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(_Map2.default, this.props),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(_MessageBox2.default, null),
+        _react2.default.createElement(_MessageBox2.default, { store: this.props }),
         _react2.default.createElement('br', null)
       );
     }
@@ -13274,7 +13276,7 @@ var GMaps = function (_Component) {
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            console.log(nextProps);
+            // console.log(nextProps)
             if (nextProps.center.lat !== this.props.center.lat) {
                 this.map.setCenter(nextProps.center);
             }
@@ -13479,7 +13481,7 @@ exports.default = Map;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -13497,102 +13499,115 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var MessageBox = function (_Component) {
-	_inherits(MessageBox, _Component);
+  _inherits(MessageBox, _Component);
 
-	function MessageBox() {
-		_classCallCheck(this, MessageBox);
+  function MessageBox() {
+    _classCallCheck(this, MessageBox);
 
-		return _possibleConstructorReturn(this, (MessageBox.__proto__ || Object.getPrototypeOf(MessageBox)).apply(this, arguments));
-	}
+    return _possibleConstructorReturn(this, (MessageBox.__proto__ || Object.getPrototypeOf(MessageBox)).apply(this, arguments));
+  }
 
-	_createClass(MessageBox, [{
-		key: 'initEvents',
-		value: function initEvents() {
-			var _this2 = this;
+  _createClass(MessageBox, [{
+    key: 'initEvents',
+    value: function initEvents() {
+      var _this2 = this;
 
-			this.root.addEventListener('keydown', function (e) {
-				var target = e.target,
-				    keyCode = e.keyCode;
+      this.root.addEventListener('keydown', function (e) {
+        var target = e.target,
+            keyCode = e.keyCode;
 
-				if (target.classList.contains('input') || target.closest('input')) {
-					_this2.updateValue(target.value, keyCode);
-				}
-			});
-		}
-	}, {
-		key: 'refreshProps',
-		value: function refreshProps(newObj) {
-			this.value = newObj;
-			this.render();
-		}
-	}, {
-		key: 'handleSubmit',
-		value: function handleSubmit(event) {
-			event.preventDefault();
+        if (target.classList.contains('input') || target.closest('input')) {
+          _this2.updateValue(target.value, keyCode);
+        }
+      });
+    }
+  }, {
+    key: 'refreshProps',
+    value: function refreshProps(newObj) {
+      this.value = newObj;
+      this.render();
+    }
+  }, {
+    key: 'handleChange',
+    value: function handleChange(event) {
+      this.setState({ value: event.target.value });
+    }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      // console.log(this.props)
+      var dispatch = this.props.store.dispatch;
 
-			console.log({ carcolor: event.target.carcolor.value });
-			console.log({ streetone: event.target.streetone.value });
-			console.log({ streettwo: event.target.streettwo.value });
-			console.log({ othernotes: event.target.othernotes.value });
-		}
-	}, {
-		key: 'render',
-		value: function render() {
-			return _react2.default.createElement(
-				'div',
-				null,
-				_react2.default.createElement(
-					'p',
-					null,
-					' ENTER THE COLOR OF YOUR CAR BELOW '
-				),
-				_react2.default.createElement(
-					'form',
-					{ onSubmit: this.handleSubmit },
-					_react2.default.createElement(
-						'label',
-						null,
-						'Car Color:',
-						_react2.default.createElement('input', { type: 'text', name: 'carcolor', placeholder: 'Car Color' })
-					),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement(
-						'p',
-						null,
-						' ENTER INTERSECTIONS '
-					),
-					_react2.default.createElement(
-						'label',
-						null,
-						'Street One:',
-						_react2.default.createElement('input', { type: 'text', name: 'streetone', placeholder: 'Street One' })
-					),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement(
-						'label',
-						null,
-						'Street Two:',
-						_react2.default.createElement('input', { type: 'text', name: 'streettwo', placeholder: 'Street Two' })
-					),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement(
-						'label',
-						null,
-						'Other Notes:',
-						_react2.default.createElement('input', { type: 'text', name: 'othernotes', placeholder: 'Other notes' })
-					),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement('br', null),
-					_react2.default.createElement('input', { type: 'submit', value: 'Enter' })
-				)
-			);
-		}
-	}]);
+      dispatch('PARKING_INPUTS', {
+        carcolor: e.target.carcolor.value,
+        streetone: e.target.streetone.value,
+        streettwo: e.target.streettwo.value,
+        othernotes: e.target.othernotes.value
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
 
-	return MessageBox;
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'p',
+          null,
+          ' ENTER THE COLOR OF YOUR CAR BELOW '
+        ),
+        _react2.default.createElement(
+          'form',
+          { onSubmit: function onSubmit(e) {
+              return _this3.handleSubmit(e);
+            } },
+          _react2.default.createElement(
+            'label',
+            null,
+            'Car Color:',
+            _react2.default.createElement('input', { type: 'text', name: 'carcolor', placeholder: 'Car Color' })
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'p',
+            null,
+            ' ENTER INTERSECTIONS '
+          ),
+          _react2.default.createElement(
+            'label',
+            null,
+            'Street One:',
+            _react2.default.createElement('input', { type: 'text', name: 'streetone', placeholder: 'Street One' })
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'label',
+            null,
+            'Street Two:',
+            _react2.default.createElement('input', { type: 'text', name: 'streettwo', placeholder: 'Street Two' })
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'label',
+            null,
+            'Other Notes:',
+            _react2.default.createElement('input', { type: 'text', name: 'othernotes', placeholder: 'Other notes' })
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement('input', { type: 'submit', value: 'Enter' })
+        )
+      );
+    }
+  }]);
+
+  return MessageBox;
 }(_react.Component);
 
 exports.default = MessageBox;
@@ -13694,7 +13709,9 @@ exports.default = Nav;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.firebaseApp = undefined;
 exports.signIn = signIn;
+exports.getCurrentUser = getCurrentUser;
 exports.signOut = signOut;
 
 var _firebase = __webpack_require__(138);
@@ -13712,15 +13729,34 @@ var config = {
   storageBucket: "parkingapp-f24e6.appspot.com",
   messagingSenderId: "730835847265"
 };
-var firebaseApp = _firebase2.default.initializeApp(config);
+var firebaseApp = exports.firebaseApp = _firebase2.default.initializeApp(config);
 var firebaseAuth = firebaseApp.auth();
 
-function signIn() {
-  var provider = new _firebase2.default.auth.GoogleAuthProvider();
+// export function readAllUsers(name) {
+//   const newUserRef = database.ref('users').push();
+//   const newUserKey = newUserRef.key;
 
+//   database.ref('users').push({
+//     userID: newUserKey,
+//     username: name,
+//   });
+
+//   console.log(name,"this is name")
+// }
+// readAllUsers('taq')
+// export function readAllUsers() {
+//   return firebase.database().ref('/users').once('value').then(function (snapshot) {
+//     console.log(snapshot.val());
+//     console.log("here")
+//   });
+// }
+
+
+function signIn() {
+  var provider = new _firebase2.default.auth.GoogleAuthProvider(); // Creates the Google Authorization provider
   return new Promise(function (resolve, reject) {
-    firebaseAuth.signInWithPopup(provider).then(function (result) {
-      // var token = result.credential.accessToken;
+    firebaseAuth.signInWithPopup(provider // allows user to sign in using a pop-up window
+    ).then(function (result) {
       resolve(result);
     }).catch(function (error) {
       var errorCode = error.code;
@@ -13729,8 +13765,23 @@ function signIn() {
   });
 }
 
+function getCurrentUser() {
+  return new Promise(function (resolve, reject) {
+    _firebase2.default.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        var _user = _firebase2.default.auth().currentUser;
+        var uid = _user.uid;
+        var userName = _user.displayName;
+        var email = _user.email;
+        resolve({ uid: uid, userName: userName, email: email });
+      } else {
+        // No user is signed in.
+      }
+    });
+  });
+}
+
 function signOut() {
-  var provider = new _firebase2.default.auth.GoogleAuthProvider();
   return new Promise(function (resolve, reject) {
     firebaseAuth.signOut().then(function (result) {
       resolve(result);
@@ -13764,7 +13815,11 @@ var actions = exports.actions = {
 	},
 	'GET_LOCATION': function GET_LOCATION(oldStore, options) {
 		return (0, _reducers.getLocation)(oldStore, options);
+	},
+	'PARKING_INPUTS': function PARKING_INPUTS(oldStore, options) {
+		return (0, _reducers.parkingInputs)(oldStore, options);
 	}
+
 };
 
 /***/ }),
@@ -13777,11 +13832,14 @@ var actions = exports.actions = {
 Object.defineProperty(exports, "__esModule", {
 	value: true
 });
-exports.getLocation = undefined;
+exports.parkingInputs = exports.getLocation = undefined;
 exports.signin = signin;
 exports.signout = signout;
+exports.readAllUsers = readAllUsers;
 
 var _auth = __webpack_require__(115);
+
+var _database = __webpack_require__(249);
 
 function signin(oldStore, options) {
 	var currentUser = oldStore.currentUser;
@@ -13796,25 +13854,31 @@ function signin(oldStore, options) {
 
 function signout(oldStore, options) {
 	var currentUser = oldStore.currentUser;
+	// console.log(oldStore, "this is the old store")
 
 	return (0, _auth.signOut)().then(function (res) {
-		var user = "please sign in";
-		return Object.assign({}, oldStore, {
-			currentUser: currentUser
+		return Object.assign({}, {
+			currentUser: null
 		});
+	});
+}
+
+function readAllUsers(oldStore, options) {
+
+	return (0, _auth.readAllusers)().then(function (res) {
+		return Object.assign({}, {});
 	});
 }
 
 var getLocationAsPromise = function getLocationAsPromise() {
 	return new Promise(function (resolve, reject) {
-		console.log('here');
+
 		if (!navigator.geolocation) {
 			reject();
 			return;
 		}
 
 		navigator.geolocation.getCurrentPosition(function (position) {
-			console.log(1);
 			resolve({
 				lat: position.coords.latitude,
 				lng: position.coords.longitude
@@ -13836,6 +13900,28 @@ var getLocation = exports.getLocation = function getLocation(oldStore, options) 
 	});
 };
 
+var parkingInputs = exports.parkingInputs = function parkingInputs(oldStore, options) {
+	return Promise.resolve().then(function (_) {
+		// console.log(options)
+		var carcolor = options.carcolor,
+		    streetone = options.streetone,
+		    streettwo = options.streettwo,
+		    othernotes = options.othernotes;
+
+		console.log(carcolor, streetone, streettwo, othernotes);
+		(0, _database.addToFirebase)(options);
+		return Object.assign({}, oldStore, {
+			textInputs: {
+				carcolor: carcolor,
+				streetone: streetone,
+				streettwo: streettwo,
+				othernotes: othernotes
+			}
+		});
+		// this.bindAsArray(firebase.database().ref('textInputs'), 'data');
+	});
+};
+
 /***/ }),
 /* 118 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -13851,6 +13937,12 @@ var Store = exports.Store = {
     position: {
         lat: -34.397,
         lng: 150.644
+    },
+    textInputs: {
+        carcolor: null,
+        streetone: null,
+        streettwo: null,
+        othernotes: null
     }
 };
 
@@ -31545,6 +31637,39 @@ __webpack_require__(247);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
+
+/***/ }),
+/* 249 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.addToFirebase = undefined;
+
+var _auth = __webpack_require__(115);
+
+var database = _auth.firebaseApp.database();
+// console.log(database, "this is the database");
+
+
+var addToFirebase = exports.addToFirebase = function addToFirebase(data) {
+  (0, _auth.getCurrentUser)().then(function (res) {
+    var uid = res.uid,
+        email = res.email,
+        userName = res.userName;
+
+    var updates = {};
+    var updates2 = {};
+    updates['/users/' + uid] = data;
+    updates2['/users/uid' + userName] = res;
+    database.ref().update(updates);
+    database.ref().update(updates2);
+  });
+};
 
 /***/ })
 /******/ ]);
