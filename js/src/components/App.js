@@ -1,22 +1,33 @@
 import React, { Component } from 'react';
-import Nav from './Nav'
-import Map from './Map'
-import MessageBox from './MessageBox'
+import Router, { Route, Link } from '../router/Router';
+import Nav from './Nav';
+import Map from './Map';
+import MessageBox from './MessageBox';
+
+import {monitorNewPins} from '../firebase/database'
 
 export default class App extends Component {
 	componentDidMount() {
 		this.props.dispatch('GET_LOCATION')
+    // this.props.dispatch('CURRENT_LOCATION')
+
+    monitorNewPins((dbData) => {
+      console.log('here')
+      this.props.dispatch('UPDATE_PINS', dbData)
+    });
 	}
+
     render() {
-      // console.log(this.props)
-        // <Nav store={this.props} />
-        //    <br></br>
-        //    <Map {...this.props} />
-        //    <br></br>
+      
         return (<div>
-        <Nav store={this.props} />
-           <MessageBox store={this.props}/>
-            <br></br>
+          <Nav store={this.props} />
+       <br></br>
+       
+           <Map {...this.props} />
+             <br></br>
+            <MessageBox store={this.props}/>
+    <br></br>
+          
   			
         </div>);
     }

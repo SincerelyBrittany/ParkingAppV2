@@ -142,16 +142,18 @@ export default class GMaps extends Component {
 export class Marker extends Component {
     marker = null
     _loadMarker(props) {
-        const {position, map, animation, draggable} = props;
+        const {position, map, animation, draggable, fillColor} = props;
         if (!map) return;
+        console.log('########', fillColor)
         this.marker = new google.maps.Marker({
             position,
             map,
+            icon: `http://maps.google.com/mapfiles/ms/icons/${fillColor || 'red'}-dot.png`,
             animation: google.maps.Animation[animation],
             draggable,
         });
         const {events} = props;
-        Object.keys(events).forEach((event) => this.marker.addListener(event, () => {
+        Object.keys(events || {}).forEach((event) => this.marker.addListener(event, () => {
             events[event](this.marker, map)
         }))
     }
@@ -159,6 +161,9 @@ export class Marker extends Component {
         this._loadMarker(this.props);
     }
     componentWillReceiveProps(nextProps) {
+        if (this.marker) {
+            this.marker.setMap(null)
+        }
         this._loadMarker(nextProps)
     }
     render() {

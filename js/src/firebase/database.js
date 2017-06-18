@@ -7,14 +7,24 @@ const database = firebaseApp.database();
 
 export const addToFirebase = (data) => {
 	getCurrentUser().then(res => {
-        const { uid, email, userName} = res;
+        const { uid, email, userName} = res
+        const { carcolor, streetone, streettwo, othernotes, lat, lng} = data;
+        console.log(data)
         let updates = {};
-        let updates2 = {};
-        updates['/users/' + uid] = data;
-        updates2['/users/uid' + userName] = res;
+        updates['/users/' + uid] = Object.assign({}, res, data)
         database.ref().update(updates);
-         database.ref().update(updates2);
-
-
 	})
 };
+
+export const monitorNewPins = (cb) => {
+	database.ref().child('users').on('value', (snap) => {
+		console.log(snap.val())
+		if (typeof cb === 'function') {
+			cb(snap.val())
+		}
+	})
+}
+
+
+
+

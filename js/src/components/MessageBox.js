@@ -16,14 +16,14 @@ export default class MessageBox extends Component{
     this.render();
   }
 
-  handleChange(event) {
-    this.setState({value: event.target.value});
-  }
+  // handleChange(event) {
+  //   this.setState({value: event.target.value});
+  // }
 
 
   handleSubmit(e){
     e.preventDefault();
-    // console.log(this.props)
+    console.log(this.props, "on submit")
     const dispatch = this.props.store.dispatch
 
     dispatch('PARKING_INPUTS', {

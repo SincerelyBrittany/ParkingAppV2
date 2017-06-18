@@ -1,7 +1,6 @@
 
 import { signIn } from '../firebase/auth'
 import { signOut } from '../firebase/auth'
-import { readAllusers } from '../firebase/auth'
 import { addToFirebase } from '../firebase/database'
 
 
@@ -14,6 +13,7 @@ export function signin(oldStore, options) {
 		    const user = res.user.displayName
 	        return Object.assign({}, oldStore, {
 	            currentUser: user,
+	            currentUserObj: res.user,
 	        });
 	    });
 
@@ -27,23 +27,12 @@ export function signout(oldStore, options) {
 		.then(res => {
 	        return Object.assign({}, {
 	            currentUser: null,
+	            currentUserObj: {},
 	        });
 	    });
 
 }
 
-export function readAllUsers (oldStore, options) {
-	
-	return readAllusers()
-		.then(res => {
-	        return Object.assign({}, {
-
-
-
-	        });
-	    });
-
-}
 
 
 
@@ -67,6 +56,8 @@ const getLocationAsPromise = () => {
 }
 
 export const getLocation = (oldStore, options) => {
+	console.log(options, "this is options")
+
 	return getLocationAsPromise().then(({lat, lng}) => {
 		return Object.assign({}, oldStore, {
 			position: {
@@ -78,9 +69,7 @@ export const getLocation = (oldStore, options) => {
 
 export const parkingInputs = (oldStore, options) => {
 	return Promise.resolve().then(_ => {
-		// console.log(options)
 		const {carcolor, streetone, streettwo, othernotes} = options;
-		console.log(carcolor, streetone, streettwo, othernotes )
 		addToFirebase(options)
 		return Object.assign({}, oldStore, {
 		  textInputs: {
@@ -95,10 +84,51 @@ export const parkingInputs = (oldStore, options) => {
 }
 
 
+export const currentLocation = (oldStore, options) => {
+	return Promise.resolve().then(_ => {
+		const {lat, lng} = options;
+		addToFirebase(options)
+		return Object.assign({}, oldStore, {
+	       	position: {
+		        lat,
+		        lng,
+	    	},
+	    	initialUpdate: false,
+		});
+	})
+}
 
 
+export const updatePins = (oldStore, options) => {
+	console.log('in updatePins')
+	return getLocation(oldStore, {}).then(oldStore => {
+		const {currentUserObj, currentUser} = oldStore;
+		console.log(currentUserObj, options, oldStore)
+		if (currentUser === null) {
+			return oldStore;
+		}
+		const {uid} = currentUserObj;
 
+		const newUserMarkers = Object.keys(options).reduce((_arr, user) => {
+			if (options[user].uid === uid) {
+				return _arr;
+			}
 
+			_arr.push({
+				lat: options[user].lat,
+				lng: options[user].lng,
+			});
+
+			return _arr;
+		}, []);
+
+		console.log(newUserMarkers)
+
+		return Object.assign({}, oldStore, {
+			userMarkers: newUserMarkers,
+		});
+	})
+}
 
 
 
