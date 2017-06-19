@@ -8389,9 +8389,9 @@ function signOut() {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+  value: true
 });
-exports.monitorNewPins = exports.addToFirebase = undefined;
+exports.getPins = exports.monitorNewPins = exports.addToFirebase = undefined;
 
 var _auth = __webpack_require__(67);
 
@@ -8400,31 +8400,37 @@ var database = _auth.firebaseApp.database();
 
 
 var addToFirebase = exports.addToFirebase = function addToFirebase(data) {
-	(0, _auth.getCurrentUser)().then(function (res) {
-		var uid = res.uid,
-		    email = res.email,
-		    userName = res.userName;
-		var carcolor = data.carcolor,
-		    streetone = data.streetone,
-		    streettwo = data.streettwo,
-		    othernotes = data.othernotes,
-		    lat = data.lat,
-		    lng = data.lng;
+  (0, _auth.getCurrentUser)().then(function (res) {
+    var uid = res.uid,
+        email = res.email,
+        userName = res.userName;
+    var carcolor = data.carcolor,
+        streetone = data.streetone,
+        streettwo = data.streettwo,
+        othernotes = data.othernotes,
+        lat = data.lat,
+        lng = data.lng;
 
-		console.log(data);
-		var updates = {};
-		updates['/users/' + uid] = Object.assign({}, res, data);
-		database.ref().update(updates);
-	});
+    console.log(data);
+    var updates = {};
+    updates['/users/' + uid] = Object.assign({}, res, data);
+    database.ref().update(updates);
+  });
 };
 
 var monitorNewPins = exports.monitorNewPins = function monitorNewPins(cb) {
-	database.ref().child('users').on('value', function (snap) {
-		console.log(snap.val());
-		if (typeof cb === 'function') {
-			cb(snap.val());
-		}
-	});
+  database.ref().child('users').on('value', function (snap) {
+    console.log(snap.val());
+    if (typeof cb === 'function') {
+      cb(snap.val());
+    }
+  });
+};
+
+var getPins = exports.getPins = function getPins() {
+  return database.ref().child('users').once('value').then(function (snap) {
+    return snap.val();
+  });
 };
 
 /***/ }),
@@ -14184,6 +14190,10 @@ function signin(oldStore, options) {
 		return Object.assign({}, oldStore, {
 			currentUser: user,
 			currentUserObj: res.user
+		});
+	}).then(function (oldStore) {
+		return (0, _database.getPins)().then(function (dbData) {
+			return updatePins(oldStore, dbData);
 		});
 	});
 }

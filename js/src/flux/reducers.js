@@ -1,7 +1,10 @@
 
 import { signIn } from '../firebase/auth'
 import { signOut } from '../firebase/auth'
-import { addToFirebase } from '../firebase/database'
+import {
+    addToFirebase,
+    getPins,
+} from '../firebase/database'
 
 
 
@@ -15,8 +18,11 @@ export function signin(oldStore, options) {
 	            currentUser: user,
 	            currentUserObj: res.user,
 	        });
-	    });
-
+	    })
+        .then(oldStore => {
+            return getPins()
+                .then(dbData => updatePins(oldStore, dbData))
+         })
 }
 
 
