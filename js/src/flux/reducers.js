@@ -58,6 +58,11 @@ const getLocationAsPromise = () => {
 export const getLocation = (oldStore, options) => {
 	console.log(options, "this is options")
 
+    // we only want to poll currentlocation once, really
+    if (options && options.skip) {
+        return Promise.resolve(oldStore);
+    }
+
 	return getLocationAsPromise().then(({lat, lng}) => {
 		return Object.assign({}, oldStore, {
 			position: {
@@ -101,7 +106,9 @@ export const currentLocation = (oldStore, options) => {
 
 export const updatePins = (oldStore, options) => {
 	console.log('in updatePins')
-	return getLocation(oldStore, {}).then(oldStore => {
+	return getLocation(oldStore, {
+        skip: true 
+    }).then(oldStore => {
 		const {currentUserObj, currentUser} = oldStore;
 		console.log(currentUserObj, options, oldStore)
 		if (currentUser === null) {

@@ -44,15 +44,13 @@ export default class Map extends Component {
     		}
     	};
 
-      // if (this.props.initialUpdate) {
         GMapsProps.center = this.props.position;
         MarkerProps.animation = 'DROP'
-      // }
 
         return (<div>
        		<GMaps apiKey={"AIzaSyBuUWQ06dwV5MUA4T5C77KTsQDqYqf9HIk"} {...GMapsProps}>
-       			<Marker {...MarkerProps} />
-            {this.props.userMarkers.map(({lat, lng}) => <Marker key={`${lat}${lng}`} position={{lat, lng}} fillColor={'green'}/>)}
+       			<Marker {...MarkerProps} key={-1}/>
+            {this.props.userMarkers.map(({lat, lng}, i) => <Marker key={`${i}`} position={{lat, lng}} fillColor={'green'}/>)}
        		</GMaps>
         </div>);
     }
