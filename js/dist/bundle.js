@@ -9091,13 +9091,11 @@ var firebaseAuth = firebaseApp.auth();
 //     username: name,
 //   });
 
-//   console.log(name,"this is name")
 // }
 // readAllUsers('taq')
 // export function readAllUsers() {
 //   return firebase.database().ref('/users').once('value').then(function (snapshot) {
-//     console.log(snapshot.val());
-//     console.log("here")
+
 //   });
 // }
 
@@ -9157,8 +9155,6 @@ exports.getPins = exports.monitorNewPins = exports.addToFirebase = undefined;
 var _auth = __webpack_require__(77);
 
 var database = _auth.firebaseApp.database();
-// console.log(database, "this is the database");
-
 
 var addToFirebase = exports.addToFirebase = function addToFirebase(data) {
   (0, _auth.getCurrentUser)().then(function (res) {
@@ -9172,7 +9168,6 @@ var addToFirebase = exports.addToFirebase = function addToFirebase(data) {
         lat = data.lat,
         lng = data.lng;
 
-    console.log(data);
     var updates = {};
     updates['/users/' + uid] = Object.assign({}, res, data);
     database.ref().update(updates);
@@ -9181,7 +9176,6 @@ var addToFirebase = exports.addToFirebase = function addToFirebase(data) {
 
 var monitorNewPins = exports.monitorNewPins = function monitorNewPins(cb) {
   database.ref().child('users').on('value', function (snap) {
-    console.log(snap.val());
     if (typeof cb === 'function') {
       cb(snap.val());
     }
@@ -14694,7 +14688,6 @@ var App = function (_Component) {
       // this.props.dispatch('CURRENT_LOCATION')
 
       );(0, _database.monitorNewPins)(function (dbData) {
-        console.log('here');
         _this2.props.dispatch('UPDATE_PINS', dbData);
       });
     }
@@ -14755,6 +14748,15 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var addInfoWindow = function addInfoWindow(marker, map, props) {
+    console.log(marker, map, props);
+    var contentString = '<div id="content">' + '<button>Accept</button>' + '</div>';
+    var infowindow = new google.maps.InfoWindow({
+        content: contentString
+    });
+    infowindow.open(map, marker, undefined.props.userMarkers);
+};
+
 var Map = function (_Component) {
     _inherits(Map, _Component);
 
@@ -14768,9 +14770,6 @@ var Map = function (_Component) {
         key: 'handleCurrentLocation',
         value: function handleCurrentLocation(marker, map) {
             var dispatch = this.props.dispatch;
-            // console.log(this.props.dispatch, "this is store");
-            // const lat = marker.getPosition().lat().toFixed(8);
-            // const lng = marker.getPosition().lng().toFixed(8);
             dispatch('CURRENT_LOCATION', {
                 lat: marker.getPosition().lat(),
                 lng: marker.getPosition().lng()
@@ -14780,8 +14779,6 @@ var Map = function (_Component) {
         key: 'render',
         value: function render() {
             var _this2 = this;
-
-            // console.log(this.props.position)
 
             var GMapsProps = {
                 // center: this.props.position,
@@ -14797,25 +14794,13 @@ var Map = function (_Component) {
                 }
             };
 
-            var contentString = '<div id="content">' + '<div id="siteNotice">' + '</div>' + '<h1 id="firstHeading" class="firstHeading">Uluru</h1>' + '<div id="bodyContent">' + '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' + 'sandstone rock formation in the southern part of the ' + 'Heritage Site.</p>' + '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' + 'https://en.wikipedia.org/w/index.php?title=Uluru</a> ' + '(last visited June 22, 2009).</p>' + '</div>' + '</div>';
-
-            //we will be passing true or false here
-            var showInfoWindow = function showInfoWindow(click) {
-                if (click) return _react2.default.createElement(_GMaps.InfoWindow, {
-                    title: "INFO WINDOW",
-                    position: _this2.props.position,
-                    content: contentString
-                });
-                return null;
-            };
-
             var MarkerProps = {
                 position: this.props.position,
                 // animation: 'DROP',
                 draggable: true,
                 events: {
                     'click': function click(marker, map) {
-                        return infowindow(marker, map);
+                        return addInfoWindow(marker, map, _this2.props.userMarkers);
                     },
                     'dragend': function dragend(marker, map) {
                         return _this2.handleCurrentLocation(marker, map);
@@ -14824,7 +14809,7 @@ var Map = function (_Component) {
             };
 
             GMapsProps.center = this.props.position;
-            MarkerProps.animation = 'CLICK', 'DROP';
+            MarkerProps.animation = 'DROP';
 
             return _react2.default.createElement(
                 'div',
@@ -14832,9 +14817,7 @@ var Map = function (_Component) {
                 _react2.default.createElement(
                     _GMaps2.default,
                     _extends({ apiKey: "AIzaSyBuUWQ06dwV5MUA4T5C77KTsQDqYqf9HIk" }, GMapsProps),
-                    showInfoWindow(true),
                     _react2.default.createElement(_GMaps.Marker, _extends({}, MarkerProps, { key: -1 })),
-                    '}',
                     this.props.userMarkers.map(function (_ref, i) {
                         var lat = _ref.lat,
                             lng = _ref.lng;
@@ -14914,7 +14897,6 @@ var MessageBox = function (_Component) {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
-      console.log(this.props, "on submit");
       var dispatch = this.props.store.dispatch;
 
       dispatch('PARKING_INPUTS', {
@@ -15149,7 +15131,6 @@ function signin(oldStore, options) {
 
 function signout(oldStore, options) {
 	var currentUser = oldStore.currentUser;
-	// console.log(oldStore, "this is the old store")
 
 	return (0, _auth.signOut)().then(function (res) {
 		return Object.assign({}, {
@@ -15177,16 +15158,16 @@ var getLocationAsPromise = function getLocationAsPromise() {
 };
 
 var getLocation = exports.getLocation = function getLocation(oldStore, options) {
-	console.log(options, "this is options"
 
 	// we only want to poll currentlocation once, really
-	);if (options && options.skip) {
+	if (options && options.skip) {
 		return Promise.resolve(oldStore);
 	}
 
 	return getLocationAsPromise().then(function (_ref) {
 		var lat = _ref.lat,
 		    lng = _ref.lng;
+
 
 		return Object.assign({}, oldStore, {
 			position: {
@@ -15233,14 +15214,12 @@ var currentLocation = exports.currentLocation = function currentLocation(oldStor
 };
 
 var updatePins = exports.updatePins = function updatePins(oldStore, options) {
-	console.log('in updatePins');
 	return getLocation(oldStore, {
 		skip: true
 	}).then(function (oldStore) {
 		var currentUserObj = oldStore.currentUserObj,
 		    currentUser = oldStore.currentUser;
 
-		console.log(currentUserObj, options, oldStore);
 		if (currentUser === null) {
 			return oldStore;
 		}
@@ -15259,8 +15238,6 @@ var updatePins = exports.updatePins = function updatePins(oldStore, options) {
 
 			return _arr;
 		}, []);
-
-		console.log(newUserMarkers);
 
 		return Object.assign({}, oldStore, {
 			userMarkers: newUserMarkers
@@ -34861,7 +34838,7 @@ exports.default = valueEqual;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.InfoWindow = exports.Marker = undefined;
+exports.Marker = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -35035,7 +35012,6 @@ var GMaps = function (_Component) {
     }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
-            // console.log(nextProps)
             if (nextProps.center.lat !== this.props.center.lat) {
                 this.map.setCenter(nextProps.center);
             }
@@ -35110,7 +35086,6 @@ var Marker = exports.Marker = function (_Component2) {
                 fillColor = props.fillColor;
 
             if (!map) return;
-            console.log('########', fillColor);
             this.marker = new google.maps.Marker({
                 position: position,
                 map: map,
@@ -35149,58 +35124,28 @@ var Marker = exports.Marker = function (_Component2) {
     return Marker;
 }(_react.Component);
 
-var InfoWindow = exports.InfoWindow = function (_Component3) {
-    _inherits(InfoWindow, _Component3);
-
-    function InfoWindow() {
-        var _ref3;
-
-        var _temp3, _this6, _ret3;
-
-        _classCallCheck(this, InfoWindow);
-
-        for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-            args[_key3] = arguments[_key3];
-        }
-
-        return _ret3 = (_temp3 = (_this6 = _possibleConstructorReturn(this, (_ref3 = InfoWindow.__proto__ || Object.getPrototypeOf(InfoWindow)).call.apply(_ref3, [this].concat(args))), _this6), _this6.infowindow = null, _temp3), _possibleConstructorReturn(_this6, _ret3);
-    }
-
-    _createClass(InfoWindow, [{
-        key: '_loadWindow',
-        value: function _loadWindow(props) {
-            var position = props.position,
-                map = props.map,
-                title = props.title,
-                content = props.content;
-
-            if (!map) return;
-            this.infowindow = new google.maps.InfoWindow({
-                position: position,
-                map: map,
-                content: content,
-                title: title
-            });
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this._loadWindow(this.props);
-        }
-    }, {
-        key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps(nextProps) {
-            this._loadWindow(nextProps);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            return null;
-        }
-    }]);
-
-    return InfoWindow;
-}(_react.Component);
+// export class InfoWindow extends Component {
+//     infowindow = null
+//     _loadWindow(props) {
+//         const {position, map, title, content} = props;
+//         if (!map) return;
+//         this.infowindow = new google.maps.InfoWindow({
+//             position,
+//             map,
+//             content,
+//             title,
+//         });
+//     }
+//     componentDidMount() {
+//         this._loadWindow(this.props);
+//     }
+//     componentWillReceiveProps(nextProps) {
+//         this._loadWindow(nextProps)
+//     }
+//     render() {
+//         return null;
+//     }
+// }
 
 /***/ })
 /******/ ]);

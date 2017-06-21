@@ -20,13 +20,11 @@ import firebase from 'firebase'
   //     username: name,
   //   });
 
-  //   console.log(name,"this is name")
   // }
   // readAllUsers('taq')
   // export function readAllUsers() {
   //   return firebase.database().ref('/users').once('value').then(function (snapshot) {
-  //     console.log(snapshot.val());
-  //     console.log("here")
+
   //   });
   // }
 

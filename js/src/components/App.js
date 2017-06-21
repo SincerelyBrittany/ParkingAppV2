@@ -13,7 +13,6 @@ export default class App extends Component {
     // this.props.dispatch('CURRENT_LOCATION')
 
     monitorNewPins((dbData) => {
-      console.log('here')
       this.props.dispatch('UPDATE_PINS', dbData)
     });
 	}
