@@ -25,6 +25,11 @@ export const monitorNewPins = (cb) => {
 	})
 }
 
+export const getPins = () => {
+    return database.ref().child('users').once('value')
+        .then(snap => snap.val())
+}
+
 
 
 

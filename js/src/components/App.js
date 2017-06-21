@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import Router, { Route, Link } from '../router/Router';
+// import Router, { Route, Link } from '../router/Router';
 import Nav from './Nav';
 import Map from './Map';
 import MessageBox from './MessageBox';
+import {BrowserRouter as Router, Route, BrowswerHistory} from 'react-router-dom'
 
 import {monitorNewPins} from '../firebase/database'
 
@@ -19,16 +20,40 @@ export default class App extends Component {
 
     render() {
       
-        return (<div>
-          <Nav store={this.props} />
-       <br></br>
-       
-           <Map {...this.props} />
+        return (
+          <Router>
+          <div>
+      
+          <Nav store={this.props}/>
+            <br></br>
+        <Map {...this.props} />
              <br></br>
-            <MessageBox store={this.props}/>
-    <br></br>
+             <MessageBox store={this.props}/>
+            <br></br>
+            
           
   			
-        </div>);
+        </div>
+        </Router>
+        );
     }
 }
+
+
+
+
+        //   <Router>
+        //   <div>
+      
+        //   <Route exact path="/s" component={() => <Nav store={this.props}/>} />
+        //     <br></br>
+       
+        //    <Route exact path="/s" component={() => <Map {...this.props} />} />
+        //      <br></br>
+        //     <Route exact path="/s" component={() => <MessageBox store={this.props}/>} />
+        //     <br></br>
+            
+          
+        
+        // </div>
+        // </Router>

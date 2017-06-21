@@ -170,3 +170,27 @@ export class Marker extends Component {
         return null;
     }
 }
+
+
+
+export class InfoWindow extends Component {
+    infowindow = null
+    _loadWindow(props) {
+        const {position, map, content} = props;
+        if (!map) return;
+        this.infowindow = new google.maps.InfoWindow({
+            position,
+            map,
+            content,
+        });
+    }
+    componentDidMount() {
+        this._loadWindow(this.props);
+    }
+    componentWillReceiveProps(nextProps) {
+        this._loadWindow(nextProps)
+    }
+    render() {
+        return null;
+    }
+}
