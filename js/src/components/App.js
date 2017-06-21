@@ -42,18 +42,4 @@ export default class App extends Component {
 
 
 
-        //   <Router>
-        //   <div>
-      
-        //   <Route exact path="/s" component={() => <Nav store={this.props}/>} />
-        //     <br></br>
        
-        //    <Route exact path="/s" component={() => <Map {...this.props} />} />
-        //      <br></br>
-        //     <Route exact path="/s" component={() => <MessageBox store={this.props}/>} />
-        //     <br></br>
-            
-          
-        
-        // </div>
-        // </Router>

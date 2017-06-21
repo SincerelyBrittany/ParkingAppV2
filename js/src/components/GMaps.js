@@ -176,12 +176,13 @@ export class Marker extends Component {
 export class InfoWindow extends Component {
     infowindow = null
     _loadWindow(props) {
-        const {position, map, content} = props;
+        const {position, map, title, content} = props;
         if (!map) return;
         this.infowindow = new google.maps.InfoWindow({
             position,
             map,
             content,
+            title,
         });
     }
     componentDidMount() {
