@@ -113,6 +113,7 @@ export default class GMaps extends Component {
         this._initShimLogic();
     }
     componentWillReceiveProps(nextProps) {
+        // console.log(nextProps)
         if (nextProps.center.lat !== this.props.center.lat) {
             this.map.setCenter(nextProps.center)
         }
@@ -143,6 +144,7 @@ export class Marker extends Component {
     _loadMarker(props) {
         const {position, map, animation, draggable, fillColor} = props;
         if (!map) return;
+        console.log('########', fillColor)
         this.marker = new google.maps.Marker({
             position,
             map,
@@ -168,28 +170,3 @@ export class Marker extends Component {
         return null;
     }
 }
-
-
-
-// export class InfoWindow extends Component {
-//     infowindow = null
-//     _loadWindow(props) {
-//         const {position, map, title, content} = props;
-//         if (!map) return;
-//         this.infowindow = new google.maps.InfoWindow({
-//             position,
-//             map,
-//             content,
-//             title,
-//         });
-//     }
-//     componentDidMount() {
-//         this._loadWindow(this.props);
-//     }
-//     componentWillReceiveProps(nextProps) {
-//         this._loadWindow(nextProps)
-//     }
-//     render() {
-//         return null;
-//     }
-// }

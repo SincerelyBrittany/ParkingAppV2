@@ -2,24 +2,34 @@ import React, {Component} from 'react';
 import GMaps, { Marker } from './GMaps';
 
 
+
+window.__obj = {};
+__obj.myFunction = () => {
+    alert('hello, wrold!')
+}
+
 const addInfoWindow = (marker, map, props) => {
-    console.log(marker, map, props)
+    const myFunction = () => {
+    console.log("here")
+}
+    console.log(marker,"this is marker")
     const contentString = '<div id="content">'+
-      '<button>Accept</button>'+
+      '<button onClick="__obj.myFunction()">Click here</button>'+
       '</div>';
       const infowindow = new google.maps.InfoWindow({
         content: contentString
         });
-    infowindow.open(map, marker, this.props.userMarkers);
-
-
-
-
-
+    infowindow.open(map, marker);
 }
 
-export default class Map extends Component {
 
+
+
+
+export default class Map extends Component {
+//     function myFunction() {
+//   infowindow.setContent('<div style="background-color: green">' + infowindow.getContent() + "</div>");
+// }
 
     handleCurrentLocation(marker, map){
         const dispatch = this.props.dispatch;
@@ -46,15 +56,19 @@ export default class Map extends Component {
             }
         };
 
-       
+         const greenMarkerProps = {
+            events: {
+                'click': (marker, map) => addInfoWindow(marker, map), 
+                
+            }
+        };
 
-
-        const MarkerProps = {
+            const MarkerProps = {
             position: this.props.position,
             // animation: 'DROP',
             draggable: true,
             events: {
-                'click': (marker, map) => addInfoWindow(marker, map, this.props.userMarkers),
+                'click': (marker, map) => console.log('lol you clicked the map', marker, map),
                 'dragend': (marker, map) => this.handleCurrentLocation(marker, map),
             }
         };
@@ -65,9 +79,8 @@ export default class Map extends Component {
         return (<div>
             <GMaps apiKey={"AIzaSyBuUWQ06dwV5MUA4T5C77KTsQDqYqf9HIk"} {...GMapsProps}>
                 <Marker {...MarkerProps} key={-1}/>
-                {this.props.userMarkers.map(({lat, lng}, i) => <Marker key={`${i}`} position={{lat, lng}} fillColor={'green'}/>)}
+            {this.props.userMarkers.map(({lat, lng}, i) => <Marker key={`${i}`} position={{lat, lng}} {...greenMarkerProps} fillColor={'green'}/>)}
             </GMaps>
-
         </div>);
     }
 }
