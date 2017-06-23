@@ -23,7 +23,6 @@ export default class MessageBox extends Component{
 
   handleSubmit(e){
     e.preventDefault();
-    console.log(this.props, "on submit")
     const dispatch = this.props.store.dispatch
 
     dispatch('PARKING_INPUTS', {

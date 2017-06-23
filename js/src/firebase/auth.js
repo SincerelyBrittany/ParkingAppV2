@@ -20,13 +20,11 @@ import firebase from 'firebase'
   //     username: name,
   //   });
 
-  //   console.log(name,"this is name")
   // }
   // readAllUsers('taq')
   // export function readAllUsers() {
   //   return firebase.database().ref('/users').once('value').then(function (snapshot) {
-  //     console.log(snapshot.val());
-  //     console.log("here")
+
   //   });
   // }
 
@@ -37,6 +35,7 @@ import firebase from 'firebase'
       firebaseAuth.signInWithPopup(provider) // allows user to sign in using a pop-up window
       .then(function(result) {
          resolve(result);
+         console.log(result)
       }).catch(function(error) {
          const errorCode = error.code;
          const errorMessage = error.message;

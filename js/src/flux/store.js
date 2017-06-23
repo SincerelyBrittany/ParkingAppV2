@@ -17,4 +17,5 @@ export const Store = {
     },
     initialUpdate: true,
     userMarkers: [],
+    currentRoute: '/map',
 }

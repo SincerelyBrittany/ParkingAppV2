@@ -5,7 +5,7 @@ import {
 	parkingInputs,
 	currentLocation,
 	updatePins,
-
+	updateRoute,
 } from './reducers';
 
 export const actions = {
@@ -15,6 +15,7 @@ export const actions = {
 	'PARKING_INPUTS': (oldStore, options) => parkingInputs(oldStore, options),
 	'CURRENT_LOCATION': (oldStore, options) => currentLocation(oldStore, options),
 	'UPDATE_PINS': (oldStore, options) => updatePins(oldStore, options),
+	'UPDATE_ROUTE': (oldStore, options) => updateRoute(oldStore, options),
 	
 
 }

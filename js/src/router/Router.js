@@ -10,11 +10,12 @@ export default class Router extends Component {
         const {Children, cloneElement} = React;
 
         const onRoute = (child, ...args) => {
+            // console.log(this.props, 'props')
             const currentPage = cloneElement(child, {
                 routeParams: args,
             })
 
-            this.setState({ currentPage, })
+            this.setState({ currentPage: this.props.currentRoute, })
         }
 
         const routes = Children.map(children, (child) => child.props.url)
@@ -35,7 +36,11 @@ export default class Router extends Component {
             this.router.setRoute(nUrl);
     }
     render() {
-        return this.state.currentPage || null
+        const children = React.Children.toArray(this.props.children).filter((child) => {
+            return child.props.url === (this.state.currentRoute || this.props.currentRoute);
+        })
+
+        return children[0] || null;
     }
 }
 
