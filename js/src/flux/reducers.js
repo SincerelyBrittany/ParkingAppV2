@@ -7,7 +7,14 @@ import {
 } from '../firebase/database'
 
 
-
+export function updateRoute(oldStore, options) {
+	const {route} = options;
+	return Promise.resolve().then(_ => {
+		return Object.assign({}, oldStore, {
+			currentRoute: route,
+		})
+	})
+}
 
 export function signin(oldStore, options) {
     const {currentUser} = oldStore;
@@ -70,7 +77,7 @@ export const getLocation = (oldStore, options) => {
 
   
 	return getLocationAsPromise().then(({lat, lng}) => {
-
+		console.log('getLocation', lat, lng)
 		return Object.assign({}, oldStore, {
 			position: {
 				lat, lng

@@ -35,6 +35,7 @@ import firebase from 'firebase'
       firebaseAuth.signInWithPopup(provider) // allows user to sign in using a pop-up window
       .then(function(result) {
          resolve(result);
+         console.log(result)
       }).catch(function(error) {
          const errorCode = error.code;
          const errorMessage = error.message;

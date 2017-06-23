@@ -75,7 +75,7 @@ export default class Map extends Component {
 
         GMapsProps.center = this.props.position;
         MarkerProps.animation = 'DROP'
-
+        console.log('position',this.props.position)
         return (<div>
             <GMaps apiKey={"AIzaSyBuUWQ06dwV5MUA4T5C77KTsQDqYqf9HIk"} {...GMapsProps}>
                 <Marker {...MarkerProps} key={-1}/>
