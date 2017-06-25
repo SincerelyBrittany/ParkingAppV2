@@ -31,6 +31,7 @@ export default class MessageBox extends Component{
       streettwo: e.target.streettwo.value,
       othernotes: e.target.othernotes.value
     })
+    alert("Your location has been sent to user - Please wait to be accepted")
 
   }
 
