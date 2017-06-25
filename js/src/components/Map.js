@@ -14,7 +14,7 @@ const addInfoWindow = (marker, map, props) => {
 }
     console.log(marker,"this is marker")
     const contentString = '<div id="content">'+
-      '<button onClick="__obj.myFunction()">Click here</button>'+
+      '<button onClick="__obj.myFunction()">Accept</button>'+
       '</div>';
       const infowindow = new google.maps.InfoWindow({
         content: contentString
