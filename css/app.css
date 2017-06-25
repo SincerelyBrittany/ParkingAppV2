@@ -38,3 +38,11 @@
     margin: 0 auto;
     top: 50px;
 }
+
+.ui .button {
+    width: 49%;
+    background-color: #1678c2;
+    color: #FFF;
+    text-shadow: none;
+
+}
