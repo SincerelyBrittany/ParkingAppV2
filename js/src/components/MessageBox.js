@@ -40,7 +40,10 @@ export default class MessageBox extends Component{
     e.target.carcolor.value = ""
      e.target.streetone.value = ""
      e.target.streettwo.value = ""
-     e.target.othernotes.value =""
+     e.target.othernotes.value = ""
+
+    })
+  
   }
 
 
