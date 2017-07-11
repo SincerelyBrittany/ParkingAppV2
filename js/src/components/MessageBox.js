@@ -24,15 +24,26 @@ export default class MessageBox extends Component{
   handleSubmit(e){
     e.preventDefault();
     const dispatch = this.props.store.dispatch
+    const props = this.props
 
     dispatch('PARKING_INPUTS', {
       carcolor: e.target.carcolor.value,
       streetone: e.target.streetone.value,
       streettwo: e.target.streettwo.value,
-      othernotes: e.target.othernotes.value
-    })
-
+      othernotes: e.target.othernotes.value,
+    
+  //     resetForm = () => {
+  //   this.setState(this.props)
+  // }
+  })
+    console.log("carcolor",e.target.carcolor.value)
+    e.target.carcolor.value = ""
+     e.target.streetone.value = ""
+     e.target.streettwo.value = ""
+     e.target.othernotes.value =""
   }
+
+
 
   render(){
     return(
