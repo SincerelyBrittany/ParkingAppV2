@@ -5,7 +5,13 @@ import GMaps, { Marker } from './GMaps';
 
 window.__obj = {};
 __obj.myFunction = () => {
-    alert('hello, wrold!')
+    // alert('hello, wrold!')
+    // console.log("this is marker", this.props)
+
+
+
+    window.location = "https://tlk.io/ParkingAPp";
+
 }
 
 const addInfoWindow = (marker, map, props) => {
@@ -14,7 +20,7 @@ const addInfoWindow = (marker, map, props) => {
 }
     console.log(marker,"this is marker")
     const contentString = '<div id="content">'+
-      '<button onClick="__obj.myFunction()">Accept</button>'+
+      '<button onClick="__obj.myFunction()">Accept This Parking Spot</button>'+
       '</div>';
       const infowindow = new google.maps.InfoWindow({
         content: contentString
